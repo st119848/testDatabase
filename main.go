@@ -18,8 +18,9 @@ func main() {
 func createPerson(c *gin.Context) {
 	var person data.Person
 	if err := c.ShouldBindJSON(&person); err != nil {
-		fmt.Print(person)
+		fmt.Println("Error creating person")
 	}
+	fmt.Println(person)
 }
 func mainOld() {
 	// fmt.Println("Hello, world!")
