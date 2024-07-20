@@ -1,8 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"testDatabase/data"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -15,6 +16,17 @@ func main() {
 	// err := data.AddPost(p)
 	// fmt.Println(err)
 	// p.Save()
-	post := data.PostById(1)
-	fmt.Print(post)
+	// post := data.PostById(1)
+	// fmt.Print(post)
+	r := gin.Default()
+	posts, _ := data.AllBlogPosts()
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "Hello World",
+			"posts":   posts,
+		})
+
+	})
+	r.Run()
+
 }
