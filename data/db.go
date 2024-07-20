@@ -2,8 +2,10 @@ package data
 
 import (
 	_ "database/sql"
+	"log"
 	"time"
 
+	"github.com/Masterminds/squirrel"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )
@@ -34,4 +36,25 @@ func (p Post) Save() error {
 	stmt := "INSERT INTO posts (title, body, created) VALUES (?, ?, ?)"
 	_, err := db.Exec(stmt, p.Title, p.Body, time.Now())
 	return err
+}
+func PostById(id int64) Post {
+	post := Post{}
+	psql := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Question)
+
+	sql, args, err := psql.
+		Select("title, body, created").
+		From("posts").
+		Where(squirrel.Eq{"id": id}).
+		ToSql()
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	err = db.Get(&post, sql, args...)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	return post
 }
