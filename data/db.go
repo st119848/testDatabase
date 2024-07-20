@@ -25,3 +25,13 @@ func AllBlogPosts() ([]Post, error) {
 	err := db.Select(&posts, "SELECT title, body, created FROM posts")
 	return posts, err
 }
+func AddPost(p Post) error {
+	stmt := "INSERT INTO posts (title, body, created) VALUES (?, ?, ?)"
+	_, err := db.Exec(stmt, p.Title, p.Body, time.Now())
+	return err
+}
+func (p Post) Save() error {
+	stmt := "INSERT INTO posts (title, body, created) VALUES (?, ?, ?)"
+	_, err := db.Exec(stmt, p.Title, p.Body, time.Now())
+	return err
+}
