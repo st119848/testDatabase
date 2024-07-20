@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testDatabase/data"
 
 	"github.com/gin-gonic/gin"
@@ -8,6 +9,17 @@ import (
 
 func main() {
 	data.InitGorm()
+	defer data.CloseGorm()
+
+	r := gin.Default()
+
+	r.POST("/person", createPerson)
+}
+func createPerson(c *gin.Context) {
+	var person data.Person
+	if err := c.ShouldBindJSON(&person); err != nil {
+		fmt.Print(person)
+	}
 }
 func mainOld() {
 	// fmt.Println("Hello, world!")
