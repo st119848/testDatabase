@@ -20,18 +20,8 @@ type Post struct {
 	Created time.Time
 }
 
-func AllBlogPosts() []Post {
+func AllBlogPosts() ([]Post, error) {
 	posts := []Post{}
-	rows, err := db.Query("SELECT title, body, created FROM posts")
-	if err != nil {
-		panic(err.Error())
-	}
-	// fmt.Println(rows)
-	for rows.Next() {
-		p := Post{}
-		err = rows.Scan(&p.Title, &p.Body, &p.Created)
-		// fmt.Println(p)
-		posts = append(posts, p)
-	}
-	return posts
+	err := db.Select(&posts, "SELECT title, body, created FROM posts")
+	return posts, err
 }

@@ -8,7 +8,7 @@ import (
 func main() {
 	fmt.Println("Hello, world!")
 	data.Init()
-	posts := data.AllBlogPosts()
+	posts, _ := data.AllBlogPosts()
 	fmt.Println(posts)
 
 }
