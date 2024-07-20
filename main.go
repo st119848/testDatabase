@@ -22,6 +22,8 @@ func createPerson(c *gin.Context) {
 		fmt.Println("Error creating person")
 	}
 	fmt.Println(person)
+	data.CreatePerson(person)
+	c.JSON(200, person)
 }
 func mainOld() {
 	// fmt.Println("Hello, world!")
