@@ -7,6 +7,9 @@ import (
 )
 
 func main() {
+	data.InitGorm()
+}
+func mainOld() {
 	// fmt.Println("Hello, world!")
 	data.Init()
 	// posts, _ := data.AllBlogPosts()
