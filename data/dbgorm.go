@@ -45,3 +45,20 @@ func CreatePerson(person Person) error {
 	}
 	return nil
 }
+func UpdatePerson(id uint, updatedPerson Person) error {
+	db, _ := gorm.Open("mysql", "root:root@tcp(localhost)/post?charset=utf8&parseTime=True&loc=Local")
+
+	var person Person
+	if err := db.First(&person, id).Error; err != nil {
+		return err
+	}
+
+	person.FirstName = updatedPerson.FirstName
+	person.LastName = updatedPerson.LastName
+	person.NickName = updatedPerson.NickName
+
+	if err := db.Save(&person).Error; err != nil {
+		return err
+	}
+	return nil
+}
