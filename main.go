@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"testDatabase/data"
-	"time"
 )
 
 func main() {
@@ -11,10 +10,11 @@ func main() {
 	data.Init()
 	// posts, _ := data.AllBlogPosts()
 	// fmt.Println(posts)
-	p := data.Post{"Hello", "World", time.Now()}
-	fmt.Println(p)
-	err := data.AddPost(p)
-	fmt.Println(err)
-	p.Save()
-
+	// p := data.Post{"Hello", "World", time.Now()}
+	// fmt.Println(p)
+	// err := data.AddPost(p)
+	// fmt.Println(err)
+	// p.Save()
+	post := data.PostById(1)
+	fmt.Print(post)
 }
