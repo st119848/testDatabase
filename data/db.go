@@ -10,5 +10,5 @@ import (
 var db *sqlx.DB
 
 func Init() {
-	db = sqlx.MustConnect("mysql", "user:pw@host/db?parseTime=true")
+	db = sqlx.MustConnect("mysql", "root:root@tcp(localhost)/post?parseTime=true")
 }
