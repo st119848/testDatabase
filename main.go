@@ -14,6 +14,7 @@ func main() {
 	r := gin.Default()
 
 	r.POST("/person", createPerson)
+	r.Run()
 }
 func createPerson(c *gin.Context) {
 	var person data.Person
