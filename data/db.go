@@ -2,6 +2,7 @@ package data
 
 import (
 	_ "database/sql"
+	"fmt"
 	"log"
 	"time"
 
@@ -57,4 +58,46 @@ func PostById(id int64) Post {
 	}
 
 	return post
+}
+
+func UpdatePostById(id int64, title string, body string) error {
+	psql := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Question)
+
+	sql, args, err := psql.
+		Update("posts").
+		Set("title", title).
+		Set("body", body).
+		Where(squirrel.Eq{"id": id}).
+		ToSql()
+
+	if err != nil {
+		return fmt.Errorf("error building SQL: %w", err)
+	}
+
+	_, err = db.Exec(sql, args...)
+	if err != nil {
+		return fmt.Errorf("error executing SQL: %w", err)
+	}
+
+	return nil
+}
+
+func DeletePostById(id int64) error {
+	psql := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Question)
+
+	sql, args, err := psql.
+		Delete("posts").
+		Where(squirrel.Eq{"id": id}).
+		ToSql()
+
+	if err != nil {
+		return fmt.Errorf("error building SQL: %w", err)
+	}
+
+	_, err = db.Exec(sql, args...)
+	if err != nil {
+		return fmt.Errorf("error executing SQL: %w", err)
+	}
+
+	return nil
 }
