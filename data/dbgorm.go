@@ -13,6 +13,7 @@ type Person struct {
 	ID        uint   `json:"id"`
 	FirstName string `json:"firstname"`
 	LastName  string `json:"lastname"`
+	NickName  string `json:"nickname"`
 }
 
 func InitGorm() {
@@ -28,8 +29,8 @@ func InitGorm() {
 	db.AutoMigrate(&Person{})
 
 	// Create some records
-	p1 := Person{FirstName: "John", LastName: "Doe"}
-	p2 := Person{FirstName: "Jane", LastName: "Smith"}
+	p1 := Person{FirstName: "John", LastName: "Doe", NickName: "A"}
+	p2 := Person{FirstName: "Jane", LastName: "Smith", NickName: "B"}
 	db.Create(&p1)
 	db.Create(&p2)
 
@@ -38,8 +39,25 @@ func InitGorm() {
 	db.First(&p3)
 
 	// Print the results
-	fmt.Println(p1.FirstName) // Should print "John"
-	fmt.Println(p2.LastName)  // Should print "Smith"
-	fmt.Println(p3.LastName)  // Should print the last name of the first record, which is "Doe"
+	// fmt.Println(p1.FirstName) // Should print "John"
+	// fmt.Println(p2.LastName)  // Should print "Smith"
+	// fmt.Println(p3.LastName)  // Should print the last name of the first record, which is "Doe"
+	/// ReadAll
+	var people []Person
+	db.Find(&people)
+
+	fmt.Println(people)
+	// // Read one
+	var person Person
+	db.Where("id =?", 1).First(&person)
+	fmt.Println(person)
+	// // Update
+	person.NickName = "OKOKOKOK"
+	person.LastName = "BBBBBB"
+	person.FirstName = "AAAAAA"
+	db.Save(&person)
+	// // Delete
+	db.Delete(&person)
+	fmt.Println("Deleted")
 
 }
